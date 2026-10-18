@@ -110,6 +110,12 @@
     .unit-box.unit-action { appearance: none; width: 100%; text-align: left; color: var(--ink); cursor: pointer; font: inherit; transition: transform .15s, box-shadow .15s, border-color .15s; }
     .unit-box.unit-action:hover { transform: translateY(-2px); border-color: #abb9fa; box-shadow: 0 7px 20px #14254216; }
     .unit-box.unit-action .unit-status { color: var(--accent); background: var(--tile-bg); border-color: #dce2ff; }
+    /* Kartu Refleksi Hukum Kekekalan Energi tetap tampil tetapi nonaktif. */
+    .unit-box.unit-coming-soon { background: #eef1f6; border-color: #e0e5ed; color: #8793a5; cursor: not-allowed; }
+    .unit-box.unit-coming-soon .unit-id,
+    .unit-box.unit-coming-soon h3,
+    .unit-box.unit-coming-soon p { color: #8994a5; }
+    .unit-box.unit-coming-soon .unit-status { background: #e4e8ef; color: #78869a; border-color: #d5dce6; }
     .notes-back { display: inline-flex; align-items: center; gap: 9px; padding: 9px 13px; background: #fff; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); font-size: 12px; font-weight: 750; margin-bottom: 25px; }
     .notes-back:hover { background: var(--tile-bg); color: var(--accent); }
     .notes-table-wrap { border: 1px solid var(--card-border); border-radius: 14px; background: #fff; overflow-x: auto; }
@@ -275,10 +281,12 @@
         <div class="menu-caption">LAINNYA</div>
         <nav class="nav" aria-label="Referensi dan bantuan">
           <button class="nav-item" type="button" id="externalButton" data-external="true">
-            <span class="nav-icon" aria-hidden="true">↗</span>
+            <!-- Ikon globe SVG menggunakan currentColor sehingga warnanya sama dengan ikon sidebar lainnya. -->
+            <span class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
             <span class="nav-text">Referensi Eksternal</span>
           </button>
           <button class="nav-item" type="button" id="helpButton" data-help="true">
+            <!-- Ikon Pusat Bantuan: U+24D8 (CIRCLED LATIN SMALL LETTER I) -->
             <span class="nav-icon" aria-hidden="true">ⓘ</span>
             <span class="nav-text">Pusat Bantuan</span>
           </button>
@@ -327,11 +335,11 @@
        - Subject akan terisi otomatis sesuai permintaan.
        ============================================================ */
     const developer = {
-      name: 'F. X. Abhyasa Naradhipa, B.Eng.',
-      school: 'SMA Kolese Gonzaga',
-      role: 'Guru Fisika',
-      phone: '0819-1809-1989',
-      email: 'abhyasa.naradhipa@gonzaga.sch.id'
+      name: 'Nama Developer',
+      school: 'Institusi Pendidikan',
+      role: 'Jabatan Developer',
+      phone: '08XX-XXXX-XXXX',
+      email: 'developer@example.com'
     };
     /* ============================================================
        EDIT DAFTAR REFERENSI EKSTERNAL DI SINI
@@ -634,10 +642,10 @@
       { title: 'Latihan 05 — Usaha, Gesekan, dan Perubahan Energi', url: '' }
     ];
 
-    /* Hukum Kekekalan Energi belum memiliki Refleksi dan Tantangan.
-       Untuk sekarang hanya ada tiga bagian aktif: notes, simulations, exercises. */
+    /* Hukum Kekekalan Energi: kartu Refleksi dan Tantangan tetap tampil,
+       tetapi dinonaktifkan dengan label SEGERA HADIR sampai materi siap. */
 
-    const emailSubject = 'Pertanyaan Mengenai Serabi\'s Physics Classroom';
+    const emailSubject = 'Mengenai Serabi\'s Physics Classroom';
 
     const app = document.getElementById('app');
     const nav = document.getElementById('nav');
@@ -690,7 +698,7 @@
     /* ============================================================
        HALAMAN INDEX TOPIK
        Besaran dan Satuan & Pemanasan Global: 4 tombol aktif.
-       Hukum Kekekalan Energi: 3 tombol aktif (tanpa refleksi dulu).
+       Hukum Kekekalan Energi: 3 tombol aktif + 1 kartu abu-abu SEGERA HADIR.
        Vektor & Kinematika: tetap placeholder seperti sebelumnya.
        ============================================================ */
     function renderTopic() {
@@ -702,7 +710,8 @@
         ['04', 'Refleksi dan tantangan', 'Eksplorasi lanjutan serta pertanyaan pemantik berpikir.']
       ];
       const activeTopic = [1, 2, 3].includes(currentTopic);
-      const availableUnits = currentTopic === 3 ? units.slice(0, 3) : units;
+      // Selalu tampilkan keempat kartu; hanya kartu 04 pada Energi yang nonaktif.
+      const availableUnits = units;
       const sectionMap = { '01': 'notes', '02': 'simulations', '03': 'exercises', '04': 'reflection' };
       return `
         <div class="eyebrow">MODUL PEMBELAJARAN ${String(currentTopic).padStart(2, '0')}</div>
@@ -718,7 +727,7 @@
         </div>
         <div class="section-heading"><h2>Daftar isi materi</h2><span>${availableUnits.length} bagian${activeTopic ? '' : ' · contoh'}</span></div>
         <div class="topic-actions">
-          ${availableUnits.map(unit => activeTopic ? `
+          ${availableUnits.map(unit => activeTopic && !(currentTopic === 3 && unit[0] === '04') ? `
             <button class="unit-box unit-action" type="button" data-open-section="${sectionMap[unit[0]]}" aria-label="Buka ${escapeHTML(unit[1])} ${escapeHTML(topic.name)}">
               <div class="unit-id">${unit[0]} / MODULE</div>
               <h3>${unit[1]}</h3>
@@ -726,7 +735,7 @@
               <span class="unit-status">BUKA ${escapeHTML(unit[1].toUpperCase())} →</span>
             </button>
           ` : `
-            <div class="unit-box">
+            <div class="unit-box ${currentTopic === 3 && unit[0] === '04' ? 'unit-coming-soon' : ''}" aria-disabled="true">
               <div class="unit-id">${unit[0]} / MODULE</div>
               <h3>${unit[1]}</h3>
               <p>${unit[2]}</p>
@@ -1010,11 +1019,10 @@
               </div>
             </div>
             <div class="developer-info">
-              <div class="developer-field"><span class="developer-field-label">Nama developer</span><span class="developer-field-value">${escapeHTML(developer.name)}</span></div>
-              <div class="developer-field"><span class="developer-field-label">Sekolah asal developer</span><span class="developer-field-value">${escapeHTML(developer.school)}</span></div>
+              <div class="developer-field"><span class="developer-field-label">Institusi pendidikan</span><span class="developer-field-value">${escapeHTML(developer.school)}</span></div>
               <div class="developer-field"><span class="developer-field-label">Jabatan developer</span><span class="developer-field-value">${escapeHTML(developer.role)}</span></div>
               <div class="developer-field"><span class="developer-field-label">Nomor HP / WhatsApp</span><span class="developer-field-value">${phoneField}</span></div>
-              <div class="developer-field"><span class="developer-field-label">Email developer</span><span class="developer-field-value">${emailField}</span></div>
+              <div class="developer-field"><span class="developer-field-label">Email</span><span class="developer-field-value">${emailField}</span></div>
             </div>
           </section>
           <div class="help-note">✦ Nomor WhatsApp akan membuka chat, sedangkan alamat email akan membuka aplikasi email dengan subjek pesan yang sudah disiapkan. Ganti placeholder nomor HP terlebih dahulu untuk mengaktifkan tautan WhatsApp.</div>
