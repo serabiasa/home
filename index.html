@@ -205,7 +205,7 @@
     .developer-field-value a:hover { color: #324aba; }
     .developer-field-value a:focus-visible { outline: 3px solid #ffc145; outline-offset: 4px; border-radius: 2px; }
     .developer-field-value .inactive-contact { color: var(--muted); font-weight: 600; }
-    .developer-profile { font-weight: 500; line-height: 1.8; white-space: pre-line; }
+    .developer-profile { display: flex; flex-direction: column; gap: 0.5em; line-height: 1.8; white-space: normal; }
     .help-note { background: #eef2ff; color: #475879; border: 1px solid #dae2fb; border-radius: 12px; padding: 16px 19px; font-size: 12px; line-height: 1.8; }
     /* ==========================================================
        DESAIN HALAMAN REFERENSI EKSTERNAL
@@ -1029,7 +1029,9 @@
               <div class="developer-field"><span class="developer-field-label">Jabatan developer</span><span class="developer-field-value">${escapeHTML(developer.role)}</span></div>
               <div class="developer-field"><span class="developer-field-label">Nomor HP / WhatsApp</span><span class="developer-field-value">${phoneField}</span></div>
               <div class="developer-field"><span class="developer-field-label">Email</span><span class="developer-field-value">${emailField}</span></div>
-              <div class="developer-field"><span class="developer-field-label">Profil developer</span><span class="developer-field-value developer-profile">${escapeHTML(developer.profile)}</span></div>
+              <div class="developer-field"><span class="developer-field-label">Profil developer</span><span class="developer-field-value developer-profile">${developer.profile.split('\n')
+  .map(line => `<span>${escapeHTML(line)}</span>`)
+  .join('')}</span></div>
             </div>
           </section>
           <div class="help-note">✦ Nomor WhatsApp akan membuka chat, sedangkan alamat email akan membuka aplikasi email dengan subjek pesan yang sudah disiapkan. Ganti placeholder nomor HP terlebih dahulu untuk mengaktifkan tautan WhatsApp.</div>
