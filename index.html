@@ -60,7 +60,7 @@
     .nav-item.active { background: var(--nav-active); color: white; opacity: 1; font-weight: 750; }
     .nav-icon { width: 25px; height: 24px; flex-shrink: 0; display: grid; place-items: center; font-size: 19px; }
     .nav-text { font-size: 12px; }
-    /* Menu Referensi Eksternal dan Pusat Bantuan terpisah dari topik pembelajaran. */
+    /* Menu Referensi Eksternal dan Tentang Developer terpisah dari topik pembelajaran. */
     .support-menu { margin: 19px 9px 0; padding-top: 15px; border-top: 1px solid var(--sidebar-border); }
     .support-menu .menu-caption { margin-left: 10px; margin-bottom: 10px; }
     .sidebar-bottom { margin-top: auto; padding: 22px 19px; font-size: 10px; line-height: 1.8; opacity: .58; border-top: 1px solid var(--sidebar-border); }
@@ -186,8 +186,8 @@
     .screen-overlay { display: none; }
 
     /* ==========================================================
-       DESAIN HALAMAN PUSAT BANTUAN
-       Hanya berlaku untuk halaman Pusat Bantuan.
+       DESAIN HALAMAN TENTANG DEVELOPER
+       Hanya berlaku untuk halaman Tentang Developer.
        ========================================================== */
     .help-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; max-width: 760px; }
     .developer-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 15px; overflow: hidden; }
@@ -205,6 +205,7 @@
     .developer-field-value a:hover { color: #324aba; }
     .developer-field-value a:focus-visible { outline: 3px solid #ffc145; outline-offset: 4px; border-radius: 2px; }
     .developer-field-value .inactive-contact { color: var(--muted); font-weight: 600; }
+    .developer-profile { font-weight: 500; line-height: 1.8; white-space: pre-line; }
     .help-note { background: #eef2ff; color: #475879; border: 1px solid #dae2fb; border-radius: 12px; padding: 16px 19px; font-size: 12px; line-height: 1.8; }
     /* ==========================================================
        DESAIN HALAMAN REFERENSI EKSTERNAL
@@ -286,9 +287,9 @@
             <span class="nav-text">Referensi Eksternal</span>
           </button>
           <button class="nav-item" type="button" id="helpButton" data-help="true">
-            <!-- Ikon Pusat Bantuan: U+24D8 (CIRCLED LATIN SMALL LETTER I) -->
+            <!-- Ikon Tentang Developer: U+24D8 (CIRCLED LATIN SMALL LETTER I) -->
             <span class="nav-icon" aria-hidden="true">ⓘ</span>
-            <span class="nav-text">Pusat Bantuan</span>
+            <span class="nav-text">Tentang Developer</span>
           </button>
         </nav>
       </div>
@@ -333,13 +334,18 @@
        Untuk email:
        - Ganti developer@example.com dengan email asli.
        - Subject akan terisi otomatis sesuai permintaan.
+
+       Untuk Profil developer:
+       - Isi properti profile dengan narasi singkat tentang developer.
+       - Bisa menggunakan \n untuk membuat baris baru.
        ============================================================ */
     const developer = {
-      name: 'Nama Developer',
-      school: 'Institusi Pendidikan',
-      role: 'Jabatan Developer',
-      phone: '08XX-XXXX-XXXX',
-      email: 'developer@example.com'
+      name: 'F. X. Abhyasa Naradhipa, B.Eng.',
+      school: 'SMA Kolese Gonzaga',
+      role: 'Guru Fisika',
+      phone: '0819-1809-1989',
+      email: 'abhyasa.naradhipa@gonzaga.sch.id',
+      profile: '<i>Developer</i> situs ini lahir di Jakarta pada tahun 1989.<br>Setelah lulus dari Kolese Kanisius pada tahun 2007, ia melanjutkan studinya di jurusan <i>biomedical engineering</i> di Nanyang Technological University, Singapura, dan memperoleh gelar <i>Bachelor of Engineering</i> pada tahun 2011 dengan <i>Second Lower Honours</i>. Ia sempat bekerja di Singapura dari tahun 2011 sebagai <i>research and development engineer</i> bersama Hewlett-Packard Singapore, sebelum kembali ke Indonesia pada tahun 2014 untuk mengajar.<br>Sepanjang kariernya sebagai pendidik, <i>developer</i> pernah menjadi guru di HighScope Kelapa Gading (SMP), SMA Kolese Kanisius (SMA), dan St Johannes Berchmans School (SMP). Pada Januari 2024, ia bergabung dengan komunitas SMA Kolese Gonzaga sebagai guru fisika dan mentor <i>public speaking</i> bahasa Inggris.<br><i>Developer</i> gemar memasak, membaca novel, menulis lagu dan dan bermain <i>game</i>. Ia memiliki anjing berjenis shih tzu dan Welsh corgi yang sepertinya jauh lebih pandai dari dirinya sendiri.' // EDIT PROFIL DEVELOPER DI SINI
     };
     /* ============================================================
        EDIT DAFTAR REFERENSI EKSTERNAL DI SINI
@@ -987,7 +993,7 @@
     }
 
     /* ============================================================
-       HALAMAN PUSAT BANTUAN — profil dan kontak developer
+       HALAMAN TENTANG DEVELOPER — profil dan kontak developer
        ============================================================ */
     function renderHelp() {
       // Format WhatsApp: kode negara 62 tanpa tanda +, spasi, atau strip.
@@ -1006,7 +1012,7 @@
 
       return `
         <div class="eyebrow">INFORMASI &amp; KONTAK</div>
-        <h1>Pusat Bantuan</h1>
+        <h1>Tentang Developer</h1>
         <p class="intro">Ada pertanyaan, saran, atau menemukan kendala saat menggunakan Serabi's Physics Classroom? Hubungi developer melalui kontak berikut.</p>
         <div class="help-layout">
           <section class="developer-card" aria-label="Informasi developer">
@@ -1023,6 +1029,7 @@
               <div class="developer-field"><span class="developer-field-label">Jabatan developer</span><span class="developer-field-value">${escapeHTML(developer.role)}</span></div>
               <div class="developer-field"><span class="developer-field-label">Nomor HP / WhatsApp</span><span class="developer-field-value">${phoneField}</span></div>
               <div class="developer-field"><span class="developer-field-label">Email</span><span class="developer-field-value">${emailField}</span></div>
+              <div class="developer-field"><span class="developer-field-label">Profil developer</span><span class="developer-field-value developer-profile">${escapeHTML(developer.profile)}</span></div>
             </div>
           </section>
           <div class="help-note">✦ Nomor WhatsApp akan membuka chat, sedangkan alamat email akan membuka aplikasi email dengan subjek pesan yang sudah disiapkan. Ganti placeholder nomor HP terlebih dahulu untuk mengaktifkan tautan WhatsApp.</div>
@@ -1052,7 +1059,7 @@
       const showingSection = activeSection && [1, 2, 3].includes(currentTopic);
       document.getElementById('crumb').textContent = externalSelected
         ? 'Referensi Eksternal'
-        : (helpSelected ? 'Pusat Bantuan'
+        : (helpSelected ? 'Tentang Developer'
           : (showingSection ? topics[currentTopic].name + ' / ' + sectionNames[activeSection] : topics[currentTopic].name));
       if (externalSelected) content.innerHTML = renderExternalResources();
       else if (helpSelected) content.innerHTML = renderHelp();
