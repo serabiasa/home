@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101f3a" />
+  <title>Fisika Kelas X | SMA Kolese Gonzaga</title>
+  <style>
+    /* ==========================================================
+       PENGATURAN WARNA UTAMA — bisa disesuaikan nanti.
+       ========================================================== */
+    :root {
+      --accent: #5169ec;
+      --page: #f5f7fc;
+      --topbar: #ffffff;
+      --sidebar: #101f3a;
+      --sidebar-text: #e8efff;
+      --sidebar-border: #ffffff1b;
+      --nav-active: #405bcd;
+      --nav-hover: #ffffff13;
+      --ink: #192a49;
+      --muted: #8190a7;
+      --line: #e4e9f2;
+      --card: #ffffff;
+      --card-border: #e5eaf3;
+      --tile-bg: #eef0ff;
+      --hero: linear-gradient(120deg, #4355c7, #8294ef);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); }
+    button { font: inherit; cursor: pointer; }
+    button:focus-visible { outline: 3px solid #ffc145; outline-offset: 2px; }
+    .app { min-height: 100vh; display: flex; background: var(--page); }
+    .sidebar {
+      position: sticky; top: 0; align-self: flex-start; height: 100vh; overflow-y: auto;
+      width: 247px; flex: 0 0 247px; display: flex; flex-direction: column;
+      background: var(--sidebar); color: var(--sidebar-text);
+      border-right: 1px solid var(--sidebar-border);
+    }
+    .brand { padding: 29px 19px 31px; display: flex; align-items: center; gap: 12px; }
+    .brand-icon {
+      width: 44px; height: 44px; flex-shrink: 0; border-radius: 11px;
+      background: #697aff; color: #fff; display: grid; place-items: center;
+      overflow: hidden; font-size: 24px; font-weight: 900;
+    }
+    .brand-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .brand-name { font-size: 16px; font-weight: 850; letter-spacing: -.5px; line-height: 1.15; }
+    .brand-sub { font-size: 10px; opacity: .65; margin-top: 6px; letter-spacing: .1px; }
+    .menu-caption { margin: 0 19px 12px; font-size: 10px; font-weight: 800; opacity: .5; letter-spacing: 1.3px; }
+    .nav { padding: 0 9px; display: flex; flex-direction: column; gap: 5px; }
+    .nav-item {
+      appearance: none; background: transparent; border: 0; width: 100%;
+      color: var(--sidebar-text); opacity: .76; text-align: left; border-radius: 9px;
+      padding: 12px 10px; display: flex; align-items: center; gap: 10px;
+      line-height: 1.4; transition: background .15s;
+    }
+    .nav-item:hover { background: var(--nav-hover); opacity: 1; }
+    .nav-item.active { background: var(--nav-active); color: white; opacity: 1; font-weight: 750; }
+    .nav-icon { width: 25px; height: 24px; flex-shrink: 0; display: grid; place-items: center; font-size: 19px; }
+    .nav-text { font-size: 12px; }
+    /* Menu Referensi Eksternal dan Pusat Bantuan terpisah dari topik pembelajaran. */
+    .support-menu { margin: 19px 9px 0; padding-top: 15px; border-top: 1px solid var(--sidebar-border); }
+    .support-menu .menu-caption { margin-left: 10px; margin-bottom: 10px; }
+    .sidebar-bottom { margin-top: auto; padding: 22px 19px; font-size: 10px; line-height: 1.8; opacity: .58; border-top: 1px solid var(--sidebar-border); }
+
+    .main { flex: 1; min-width: 0; min-height: 100vh; }
+    .topline {
+      height: 67px; padding: 0 37px; display: flex; justify-content: space-between;
+      align-items: center; border-bottom: 1px solid var(--line); background: var(--topbar);
+    }
+    .crumb { font-size: 12px; color: var(--muted); }
+    .crumb strong { color: var(--ink); }
+    .top-tag { font-size: 11px; border: 1px solid var(--line); border-radius: 30px; padding: 8px 13px; font-weight: 750; color: var(--muted); white-space: nowrap; }
+    .content { max-width: 1130px; margin: 0 auto; padding: 38px 37px 55px; }
+    .eyebrow { color: var(--accent); font-size: 11px; letter-spacing: 1.8px; font-weight: 850; text-transform: uppercase; margin-bottom: 13px; }
+    h1,h2,h3,p { margin: 0; }
+    h1 { font-weight: 850; font-size: clamp(30px, 4vw, 47px); letter-spacing: -1.7px; line-height: 1.16; }
+    .intro { font-size: 13px; line-height: 1.8; color: var(--muted); max-width: 650px; margin: 14px 0 25px; }
+    .hero { position: relative; display: flex; align-items: center; overflow: hidden; min-height: 205px; padding: 29px 31px; background: var(--hero); color: white; border-radius: 16px; margin-bottom: 29px; }
+    .hero-copy { z-index: 1; position: relative; max-width: 70%; }
+    .hero-kicker { font-size: 10px; letter-spacing: 1.6px; font-weight: 850; opacity: .75; margin-bottom: 13px; }
+    .hero h2 { font-size: clamp(21px, 2.5vw, 27px); letter-spacing: -.8px; line-height: 1.2; margin-bottom: 10px; }
+    .hero p { font-size: 12px; line-height: 1.7; opacity: .83; }
+    .orbits { position: absolute; width: 250px; height: 250px; right: -12px; top: -20px; border: 1px solid #ffffff55; border-radius: 50%; display: grid; place-items: center; transform: rotate(-24deg); }
+    .orbits::before,.orbits::after { content: ""; position: absolute; border: 1px solid #ffffff55; border-radius: 50%; width: 157px; height: 157px; }
+    .orbits::after { height: 80px; width: 80px; background: #ffffff22; }
+    .orbit-symbol { font-size: 59px; font-weight: 300; position: relative; z-index: 1; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 16px; gap: 10px; }
+    .section-heading h2 { font-size: 19px; letter-spacing: -.5px; }
+    .section-heading span { font-size: 11px; color: var(--muted); }
+    .topic-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 13px; }
+    .topic-card { background: var(--card); border: 1px solid var(--card-border); color: var(--ink); padding: 20px; text-align: left; border-radius: 13px; min-height: 158px; display: flex; flex-direction: column; align-items: flex-start; transition: transform .15s, box-shadow .15s; }
+    .topic-card:hover { transform: translateY(-2px); box-shadow: 0 7px 20px #14254216; }
+    .tile-icon { height: 37px; width: 37px; border-radius: 9px; background: var(--tile-bg); color: var(--accent); display: grid; place-items: center; font-size: 23px; margin-bottom: 17px; }
+    .tile-title { font-size: 13px; font-weight: 800; line-height: 1.45; }
+    .tile-footer { margin-top: auto; padding-top: 15px; font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; width: 100%; }
+    .topic-actions { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 13px; margin-top: 22px; }
+    .unit-box { background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 21px; min-height: 170px; }
+    .unit-id { font-size: 10px; letter-spacing: 1px; color: var(--accent); font-weight: 850; margin-bottom: 16px; }
+    .unit-box h3 { font-size: 16px; line-height: 1.4; margin-bottom: 8px; }
+    .unit-box p { font-size: 12px; color: var(--muted); line-height: 1.65; }
+    .unit-status { display: inline-block; margin-top: 17px; font-size: 10px; font-weight: 800; border: 1px dashed var(--line); padding: 6px 8px; border-radius: 6px; color: var(--muted); }
+    .coming-banner { border: 1px dashed var(--line); color: var(--muted); padding: 19px; border-radius: 11px; margin-top: 19px; font-size: 12px; line-height: 1.7; }
+    /* ==========================================================
+       DESAIN STUDY NOTES — BESARAN DAN SATUAN
+       Tabel ini digunakan saat kartu Study notes dibuka.
+       ========================================================== */
+    .unit-box.unit-action { appearance: none; width: 100%; text-align: left; color: var(--ink); cursor: pointer; font: inherit; transition: transform .15s, box-shadow .15s, border-color .15s; }
+    .unit-box.unit-action:hover { transform: translateY(-2px); border-color: #abb9fa; box-shadow: 0 7px 20px #14254216; }
+    .unit-box.unit-action .unit-status { color: var(--accent); background: var(--tile-bg); border-color: #dce2ff; }
+    .notes-back { display: inline-flex; align-items: center; gap: 9px; padding: 9px 13px; background: #fff; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); font-size: 12px; font-weight: 750; margin-bottom: 25px; }
+    .notes-back:hover { background: var(--tile-bg); color: var(--accent); }
+    .notes-table-wrap { border: 1px solid var(--card-border); border-radius: 14px; background: #fff; overflow-x: auto; }
+    .notes-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    .notes-table thead { background: #edf1fb; }
+    .notes-table th { color: #586984; font-size: 11px; text-transform: uppercase; letter-spacing: .7px; padding: 16px 21px; }
+    .notes-table th:first-child { width: 72%; }
+    .notes-table th:last-child { min-width: 150px; }
+    .notes-table td { padding: 19px 21px; border-top: 1px solid var(--line); vertical-align: middle; }
+    .notes-table tbody tr:hover { background: #fbfcff; }
+    .notes-title { font-weight: 750; color: var(--ink); line-height: 1.55; }
+    .notes-number { color: var(--muted); font-weight: 750; margin-right: 13px; font-variant-numeric: tabular-nums; }
+    .notes-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 750; text-decoration: none; white-space: nowrap; }
+    .notes-link:hover { text-decoration: underline; }
+    .notes-placeholder { display: inline-block; font-size: 11px; background: #f1f3f8; color: #7c8ba3; border-radius: 7px; padding: 7px 10px; white-space: nowrap; }
+    .notes-footnote { margin-top: 16px; font-size: 12px; line-height: 1.75; color: var(--muted); }
+    @media (max-width: 520px) {
+      .notes-table th, .notes-table td { padding: 14px 12px; }
+      .notes-table th:last-child { min-width: 125px; }
+      .notes-number { margin-right: 8px; }
+    }
+
+
+    /* ==========================================================
+       HALAMAN SIMULASI, LATIHAN, REFLEKSI — BESARAN DAN SATUAN
+       Silakan ubah warna, spasi, dan tipografi bagian ini.
+       ========================================================== */
+    .reflection-overview { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin: 0 0 23px; }
+    .reflection-step { background: #fff; color: #526281; border: 1px solid var(--line); border-radius: 30px; padding: 8px 12px; font-size: 11px; font-weight: 750; }
+    .reflection-step-arrow { font-size: 14px; color: #9babc3; }
+    .reflection-group { background: #fff; border: 1px solid var(--card-border); border-radius: 15px; margin: 0 0 19px; overflow: hidden; }
+    /* ACCORDION REFLEKSI: <details> tertutup saat pertama dibuka.
+       Klik ringkasan / tekan Enter atau Space untuk buka dan tutup. */
+    .reflection-group-header { display: flex; gap: 14px; align-items: center; padding: 22px 24px; background: #f9fbff; cursor: pointer; list-style: none; transition: background .15s ease; }
+    .reflection-group-header::-webkit-details-marker { display: none; }
+    .reflection-group-header::marker { content: ''; }
+    .reflection-group-header:hover { background: #f0f4ff; }
+    .reflection-group-header:focus-visible { outline: 3px solid #ffc145; outline-offset: -4px; }
+    .reflection-group[open] > .reflection-group-header { border-bottom: 1px solid var(--line); }
+    .reflection-header-copy { flex: 1; min-width: 0; }
+    .reflection-chevron { width: 32px; height: 32px; flex: 0 0 32px; display: grid; place-items: center; border-radius: 50%; background: #e9edff; color: var(--accent); font-size: 18px; font-weight: 700; transition: transform .2s ease, background .15s; }
+    .reflection-group[open] .reflection-chevron { transform: rotate(180deg); background: #dce4ff; }
+    .reflection-toggle-hint { display: inline-block; margin-top: 7px; color: var(--accent); font-size: 11px; font-weight: 750; }
+    .reflection-group[open] .reflection-toggle-hint { display: none; }
+    .reflection-level { min-width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: #e9edff; color: var(--accent); font-size: 14px; font-weight: 850; }
+    .reflection-level-name { font-size: 10px; font-weight: 850; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin: 1px 0 6px; }
+    .reflection-group h2 { font-size: 18px; letter-spacing: -.4px; line-height: 1.4; }
+    .reflection-group-header p { font-size: 12px; color: var(--muted); line-height: 1.65; margin-top: 6px; }
+    .reflection-list { list-style: none; padding: 0 24px; margin: 0; counter-reset: item; }
+    .reflection-list li { display: grid; grid-template-columns: 32px minmax(0,1fr); gap: 12px; align-items: start; padding: 17px 0; border-bottom: 1px solid var(--line); }
+    .reflection-list li:last-child { border-bottom: 0; }
+    .reflection-question-no { font-size: 11px; font-weight: 850; color: var(--accent); line-height: 1.8; font-variant-numeric: tabular-nums; }
+    .reflection-question { font-size: 13px; line-height: 1.75; color: var(--ink); }
+    .challenge-box { border-radius: 15px; background: #eaf0ff; border: 1px solid #d4defb; padding: 25px; margin-top: 23px; }
+    .challenge-box h2 { font-size: 20px; margin-bottom: 9px; letter-spacing: -.4px; }
+    .challenge-box > p { color: #526487; font-size: 12px; line-height: 1.75; margin-bottom: 15px; }
+    .challenge-list { margin: 0; padding-left: 21px; color: #263b61; }
+    .challenge-list li { padding-left: 5px; margin: 9px 0; font-size: 13px; line-height: 1.7; }
+    .reflection-ending { margin-top: 18px; font-size: 12px; line-height: 1.8; color: var(--muted); }
+    @media (max-width: 520px) {
+      .reflection-group-header { padding: 18px; }
+      .reflection-list { padding: 0 18px; }
+      .reflection-list li { gap: 8px; grid-template-columns: 25px minmax(0,1fr); }
+      .challenge-box { padding: 19px; }
+    }
+
+    .mobile-menu { display: none; border: 1px solid var(--line); background: var(--card); border-radius: 7px; padding: 5px 9px; color: var(--ink); }
+    .screen-overlay { display: none; }
+
+    /* ==========================================================
+       DESAIN HALAMAN PUSAT BANTUAN
+       Hanya berlaku untuk halaman Pusat Bantuan.
+       ========================================================== */
+    .help-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; max-width: 760px; }
+    .developer-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 15px; overflow: hidden; }
+    .developer-heading { padding: 25px 28px; display: flex; align-items: center; gap: 17px; border-bottom: 1px solid var(--line); }
+    .developer-avatar { width: 61px; height: 61px; flex-shrink: 0; border-radius: 16px; background: var(--tile-bg); color: var(--accent); display: grid; place-items: center; font-size: 29px; font-weight: 800; }
+    .developer-kicker { font-size: 10px; font-weight: 850; color: var(--accent); letter-spacing: 1.3px; margin-bottom: 7px; }
+    .developer-heading h2 { font-size: 20px; letter-spacing: -.5px; overflow-wrap: anywhere; }
+    .developer-heading p { margin-top: 6px; color: var(--muted); font-size: 12px; }
+    .developer-info { padding: 4px 28px 8px; }
+    .developer-field { display: grid; grid-template-columns: 180px minmax(0,1fr); gap: 14px; padding: 19px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+    .developer-field:last-child { border-bottom: 0; }
+    .developer-field-label { font-size: 12px; color: var(--muted); font-weight: 650; }
+    .developer-field-value { font-size: 13px; font-weight: 750; overflow-wrap: anywhere; }
+    .developer-field-value a { color: var(--accent); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+    .developer-field-value a:hover { color: #324aba; }
+    .developer-field-value a:focus-visible { outline: 3px solid #ffc145; outline-offset: 4px; border-radius: 2px; }
+    .developer-field-value .inactive-contact { color: var(--muted); font-weight: 600; }
+    .help-note { background: #eef2ff; color: #475879; border: 1px solid #dae2fb; border-radius: 12px; padding: 16px 19px; font-size: 12px; line-height: 1.8; }
+    /* ==========================================================
+       DESAIN HALAMAN REFERENSI EKSTERNAL
+       Ubah bagian ini kalau ingin menyesuaikan kartu sumber belajar.
+       ========================================================== */
+    .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+    .resource-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 12px; min-height: 215px; }
+    .resource-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .resource-icon { height: 43px; width: 43px; background: var(--tile-bg); border-radius: 11px; color: var(--accent); font-size: 22px; display: grid; place-items: center; }
+    .resource-category { color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; }
+    .resource-card h2 { font-size: 17px; line-height: 1.3; letter-spacing: -.35px; }
+    .resource-description { font-size: 12px; color: var(--muted); line-height: 1.7; }
+    .resource-link { color: var(--accent); font-size: 12px; text-decoration: none; font-weight: 800; margin-top: auto; align-self: flex-start; border-bottom: 1px solid transparent; padding-top: 8px; }
+    .resource-link:hover { border-bottom-color: currentColor; color: #324aba; }
+    .resource-link:focus-visible { outline: 3px solid #ffc145; outline-offset: 4px; border-radius: 2px; }
+    .resource-note { background: #eef2ff; color: #475879; border: 1px solid #dae2fb; border-radius: 12px; padding: 16px 19px; font-size: 12px; line-height: 1.8; margin-top: 20px; }
+    @media (max-width: 620px) { .resource-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 520px) {
+      .developer-heading { padding: 21px 18px; }
+      .developer-info { padding: 4px 18px 8px; }
+      .developer-field { grid-template-columns: 1fr; gap: 8px; }
+      .developer-heading h2 { font-size: 18px; }
+    }
+    @media (max-width: 800px) {
+      .sidebar { position: fixed; top: 0; left: 0; bottom: 0; z-index: 5; width: 247px; transform: translateX(-101%); transition: transform .2s; }
+      .app.menu-open .sidebar { transform: translateX(0); }
+      .app.menu-open .screen-overlay { display: block; position: fixed; inset: 0; background: #17132766; z-index: 4; }
+      .mobile-menu { display: block; }
+      .topline { height: 61px; padding: 0 20px; }
+      .content { padding: 29px 20px 45px; }
+      .top-tag { font-size: 10px; padding: 7px 9px; }
+    }
+    @media (max-width: 520px) {
+      .top-tag { display: none; }
+      .hero { padding: 22px; min-height: 185px; }
+      .hero-copy { max-width: 82%; }
+      .orbits { right: -105px; }
+      .topic-card { padding: 15px; min-height: 151px; }
+      .topic-actions { grid-template-columns: 1fr; }
+      h1 { font-size: 31px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="screen-overlay" id="screenOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <!-- =======================================================
+               TEMPAT LOGO SMA KOLESE GONZAGA
+               Ganti tulisan sementara di bawah dengan tag berikut:
+               <img src="logo-gonzaga.png" alt="Logo SMA Kolese Gonzaga">
+
+               CARA PAKAI:
+               1. Simpan file gambar logo di folder yang sama dengan HTML.
+               2. Ganti logo-gonzaga.png sesuai nama file gambar lu.
+               3. Hapus <span>φ</span> di bawah, lalu tempel tag <img>.
+
+               Kalau logo di-host online, src boleh memakai URL penuh.
+               ======================================================= -->
+          <span>φ</span>
+        </div>
+        <div>
+          <div class="brand-name">FISIKA KELAS X</div>
+          <div class="brand-sub">SMA Kolese Gonzaga</div>
+        </div>
+      </div>
+      <div class="menu-caption">TOPIK</div>
+      <nav class="nav" id="nav" aria-label="Topik fisika"></nav>
+      <!-- Menu bantuan dipisahkan agar tidak ikut muncul di kartu topik Home. -->
+      <div class="support-menu">
+        <div class="menu-caption">LAINNYA</div>
+        <nav class="nav" aria-label="Referensi dan bantuan">
+          <button class="nav-item" type="button" id="externalButton" data-external="true">
+            <span class="nav-icon" aria-hidden="true">↗</span>
+            <span class="nav-text">Referensi Eksternal</span>
+          </button>
+          <button class="nav-item" type="button" id="helpButton" data-help="true">
+            <span class="nav-icon" aria-hidden="true">ⓘ</span>
+            <span class="nav-text">Pusat Bantuan</span>
+          </button>
+        </nav>
+      </div>
+      <div class="sidebar-bottom">FISIKA KELAS X<br>Portal pembelajaran interaktif<br>© 2026</div>
+    </aside>
+    <main class="main" id="main">
+      <header class="topline">
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="mobile-menu" type="button" id="menuButton" aria-label="Buka menu">☰</button>
+          <div class="crumb">Ruang Belajar &nbsp;/&nbsp; <strong id="crumb">Home</strong></div>
+        </div>
+        <div class="top-tag">✦ Fisika Kelas X with Serabi</div>
+      </header>
+      <section class="content" id="content"></section>
+    </main>
+  </div>
+
+  <!-- ============================================================
+       DATA MENU TOPIK
+       Bagian ini tidak perlu diubah untuk mengedit tampilan Home.
+       ============================================================ -->
+  <script>
+    const topics = [
+      { name: 'Home', icon: '⌂', description: '' },
+      { name: 'Besaran dan Satuan', icon: '▣', description: 'Mempelajari sejarah pengukuran, besaran pokok dan turunan, dan satuan SI.' },
+      { name: 'Pemanasan Global dan Energi Terbarukan', icon: '◎', description: 'Memahami perubahan iklim serta berbagai solusi energi yang berkelanjutan.' },
+      { name: 'Hukum Kekekalan Energi', icon: 'ϟ', description: 'Menjelajahi energi kinetik, energi potensial, dan konversi bentuk energi.' },
+      { name: 'Vektor', icon: '↗', description: 'Mengenal arah, besar, komponen, dan operasi vektor dalam fisika.' },
+      { name: 'Kinematika Gerak Lurus', icon: '➜', description: 'Memahami posisi, perpindahan, kecepatan, akselerasi, GLB, dan GLBB.' }
+    ];
+
+    /* ============================================================
+       EDIT INFORMASI DEVELOPER DI SINI
+       Ganti semua placeholder di bawah dengan informasi sebenarnya.
+
+       Untuk WhatsApp:
+       - Isi phone dengan nomor asli, misalnya 08123456789
+         atau +628123456789 (angka ini HANYA CONTOH FORMAT).
+       - Script akan mengubah awalan 0 menjadi 62 secara otomatis.
+       - Tautan aktif setelah nomor asli valid (10–15 angka).
+
+       Untuk email:
+       - Ganti developer@example.com dengan email asli.
+       - Subject akan terisi otomatis sesuai permintaan.
+       ============================================================ */
+    const developer = {
+      name: 'Nama Developer',
+      school: 'Sekolah Asal Developer',
+      role: 'Jabatan Developer',
+      phone: '08XX-XXXX-XXXX',
+      email: 'developer@example.com'
+    };
+    /* ============================================================
+       EDIT DAFTAR REFERENSI EKSTERNAL DI SINI
+       Lu bisa menambah, menghapus, atau mengubah situs belajar.
+       Setiap item: name (nama situs), category (kategori),
+       icon (simbol), description (keterangan), url (alamat situs).
+       Semua URL di sini menuju situs eksternal, bukan file lokal.
+       ============================================================ */
+    const externalResources = [
+      {
+        name: 'PhET Interactive Simulations',
+        category: 'Simulasi interaktif',
+        icon: '⚛',
+        description: 'Eksperimen virtual untuk energi, gerak, pengukuran, dan berbagai fenomena fisika. Cocok buat mencoba konsep secara langsung.',
+        url: 'https://phet.colorado.edu/'
+      },
+      {
+        name: 'The Physics Classroom',
+        category: 'Materi & latihan',
+        icon: '▤',
+        description: 'Penjelasan konsep, animasi, video, simulasi, serta pertanyaan pemahaman. Berguna untuk vektor, kinematika, dan energi.',
+        url: 'https://www.physicsclassroom.com/read-watch-interact'
+      },
+      {
+        name: 'Khan Academy — High School Physics',
+        category: 'Video & latihan',
+        icon: '▷',
+        description: 'Materi fisika tingkat SMA dengan video, latihan bertahap, dan kuis untuk memeriksa pemahaman.',
+        url: 'https://www.khanacademy.org/science/highschool-physics'
+      },
+      {
+        name: 'OpenStax — High School Physics',
+        category: 'Buku teks digital',
+        icon: '▥',
+        description: 'Buku fisika SMA yang dapat dibaca online, berisi penjelasan, contoh soal, dan latihan.',
+        url: 'https://openstax.org/subjects/science#Physics'
+      },
+      {
+        name: 'CK-12 Physics Simulations',
+        category: 'Simulasi & eksplorasi',
+        icon: '◈',
+        description: 'Simulasi dengan contoh peristiwa sehari-hari, kontrol interaktif, dan grafik responsif.',
+        url: 'https://interactives.ck12.org/'
+      },
+      {
+        name: 'NASA — Climate Change',
+        category: 'Pemanasan global',
+        icon: '◎',
+        description: 'Artikel, data, dan visualisasi berbasis sains tentang perubahan iklim serta bukti pemanasan global.',
+        url: 'https://science.nasa.gov/climate-change/'
+      }
+    ];
+
+    /* ============================================================
+       EDIT DAFTAR STUDY NOTES — BESARAN DAN SATUAN DI SINI
+
+       title : Nama artikel / study notes yang tampil di kolom kiri.
+       url   : Isi dengan link dokumen (Google Drive, Google Docs,
+               PDF online, dan sebagainya) untuk mengaktifkan link.
+               Biarkan url: '' jika link belum siap.
+
+       CONTOH (ganti dengan tautan dokumen sendiri):
+       { title: 'Materi Baru', url: 'https://drive.google.com/...' }
+       ============================================================ */
+    const besaranStudyNotes = [
+      { title: 'Pengantar Besaran dan Pengukuran', url: '' },
+      { title: 'Besaran Pokok dan Besaran Turunan', url: '' },
+      { title: 'Sistem Satuan Internasional (SI)', url: '' },
+      { title: 'Konversi Satuan', url: '' },
+      { title: 'Dimensi dan Analisis Dimensi', url: '' },
+      { title: 'Angka Penting dan Notasi Ilmiah', url: '' }
+    ];
+
+    /* ============================================================
+       EDIT DAFTAR SIMULASI INTERAKTIF — BESARAN DAN SATUAN
+       title : Judul simulasi di kolom kiri.
+       url   : Link simulasi HTML / GitHub Pages, isi nanti.
+               Contoh: { title: 'Mengukur Panjang', url: 'https://...' }
+       ============================================================ */
+    const besaranSimulations = [
+      { title: 'Mengenal Besaran Pokok dan Turunan', url: '' },
+      { title: 'Memilih Alat Ukur yang Tepat', url: '' },
+      { title: 'Konversi Satuan dan Awalan SI', url: '' },
+      { title: 'Angka Penting dan Ketelitian Pengukuran', url: '' },
+      { title: 'Analisis Dimensi dalam Fisika', url: '' }
+    ];
+
+    /* ============================================================
+       EDIT DAFTAR LATIHAN SOAL — BESARAN DAN SATUAN
+       title : Judul paket latihan di kolom kiri.
+       url   : Link ke Google Form, Quizizz, PDF, atau halaman latihan.
+               Biarkan url: '' untuk placeholder.
+       ============================================================ */
+    const besaranExercises = [
+      { title: 'Latihan 01 — Besaran Pokok, Turunan, dan Satuan', url: '' },
+      { title: 'Latihan 02 — Konversi Satuan', url: '' },
+      { title: 'Latihan 03 — Dimensi dan Analisis Dimensi', url: '' },
+      { title: 'Latihan 04 — Angka Penting dan Notasi Ilmiah', url: '' },
+      { title: 'Latihan 05 — Soal Terpadu dan Aplikasi Sehari-hari', url: '' }
+    ];
+
+    /* ============================================================
+       EDIT PERTANYAAN REFLEKSI — BESARAN DAN SATUAN
+       level      : label tingkat pertanyaan.
+       title      : judul kelompok.
+       description: tujuan berpikir di tiap kelompok.
+       questions  : daftar pertanyaan bebas yang bisa lu edit.
+       Urutan dibuat bertahap dari pengamatan sampai evaluasi.
+       ============================================================ */
+    const besaranReflection = [
+      {
+        level: 'Level 1 · Mengamati',
+        title: 'Fisika di sekitar kita',
+        description: 'Mulai dari kebiasaan sederhana yang ternyata melibatkan pengukuran.',
+        questions: [
+          'Menurut kamu, apa saja yang sebenarnya kamu ukur sejak bangun tidur sampai tiba di sekolah, meskipun kamu tidak memakai penggaris?',
+          'Kalau kamu dan temanmu mengukur panjang meja menggunakan jengkal tangan, mengapa hasilnya bisa berbeda? Apakah salah satu dari kalian pasti salah?',
+          'Mengapa botol minum biasanya mencantumkan volume dalam mL, sedangkan berat badan dituliskan dalam kg? Apa yang berbeda dari kedua besaran itu?',
+          'Saat melihat prakiraan cuaca 30 °C atau aplikasi lari menunjukkan 5 km, informasi apa yang akan hilang kalau angkanya ditulis tanpa satuan?'
+        ]
+      },
+      {
+        level: 'Level 2 · Menganalisis',
+        title: 'Ketika angka perlu dipercaya',
+        description: 'Bandingkan hasil, alat, dan cara pengukuran dalam situasi nyata.',
+        questions: [
+          'Menurut kamu, kapan penggaris biasa sudah cukup untuk mengukur suatu benda, dan kapan kita perlu alat yang lebih teliti? Gunakan contoh dari rumah atau sekolah.',
+          'Dua tim mengukur panjang lapangan dan memperoleh 27,4 m serta 27,42 m. Apakah angka yang lebih panjang otomatis lebih benar? Informasi apa yang kamu perlukan sebelum menilai?',
+          'Aplikasi peta memperkirakan perjalanan ke sekolah 8 km, tetapi odometer kendaraan menunjukkan 9 km. Menurut kamu, apa saja kemungkinan penyebab perbedaan itu?',
+          'Sebuah resep meminta 0,5 liter air, tetapi gelas ukur di rumah memakai mL. Bagaimana kamu memastikan konversinya benar, dan risiko apa jika kamu salah membaca satuan?'
+        ]
+      },
+      {
+        level: 'Level 3 · Mengevaluasi',
+        title: 'Mengukur, memutuskan, bertanggung jawab',
+        description: 'Pikirkan dampak pengukuran terhadap keselamatan, keadilan, dan keputusan.',
+        questions: [
+          'Menurut kamu, apakah hasil pengukuran yang sangat teliti selalu lebih berguna daripada perkiraan cepat? Dalam kondisi apa masing-masing justru lebih tepat?',
+          'Jika sebuah timbangan pasar selalu menunjukkan nilai 100 gram lebih besar dari massa sebenarnya, siapa yang terdampak? Bagaimana kamu akan menguji dan menyelesaikan masalahnya secara adil?',
+          'Seseorang membagikan angka konsumsi listrik rumah tanpa menyebut periode waktu atau satuannya. Menurut kamu, keputusan keliru apa yang bisa muncul dari data seperti itu?',
+          'Dua penelitian mengukur besaran yang sama dengan metode berbeda dan menghasilkan angka yang tidak identik. Menurut kamu, bukti apa yang perlu diperiksa sebelum menyimpulkan salah satunya tidak dapat dipercaya?'
+        ]
+      }
+    ];
+
+    /* ============================================================
+       EDIT TANTANGAN PRAKTIS — BESARAN DAN SATUAN
+       Kegiatan ringan yang bisa dilakukan tanpa alat laboratorium.
+       ============================================================ */
+    const besaranChallenges = [
+      'Ukur satu benda di rumah dengan dua cara (misalnya jengkal dan penggaris). Catat hasil, satuan, dan jelaskan mengapa hasilnya dapat berbeda.',
+      'Pilih tiga kemasan makanan atau minuman. Temukan besaran dan satuannya, lalu ubah masing-masing ke satuan lain yang sepadan.',
+      'Tentukan cara terbaik untuk mengukur lebar ruang kelas: alat apa yang kamu pilih, seberapa teliti hasil yang diperlukan, dan bagaimana mengurangi kesalahan pengukuran?'
+    ];
+
+
+    /* ====================================================================
+       PANDUAN MENGISI LINK MATERI (TEKAN Ctrl + F DI VS CODE)
+       ====================================================================
+       Cari "EDIT LINK" untuk menemukan keenam daftar baru di bawah.
+       Untuk daftar Besaran dan Satuan, cari:
+         - EDIT DAFTAR STUDY NOTES — BESARAN DAN SATUAN
+         - EDIT DAFTAR SIMULASI INTERAKTIF — BESARAN DAN SATUAN
+         - EDIT DAFTAR LATIHAN SOAL — BESARAN DAN SATUAN
+
+       Format setiap baris:
+         { title: 'Judul materi', url: 'https://alamat-link-materi' },
+
+       Kosongkan url: '' selama tautannya belum ada.
+       Link yang sudah diisi (https://...) akan membuka tab baru.
+       Jangan lupa menambahkan koma setelah setiap baris kecuali baris
+       terakhir tidak wajib. Untuk tautan Google Drive, aktifkan akses
+       Viewer bagi siswa yang memiliki link tersebut.
+       ==================================================================== */
+
+    /* ====================================================================
+       EDIT LINK — PEMANASAN GLOBAL DAN ENERGI TERBARUKAN / STUDY NOTES
+       Ubah title dan url di bawah. Contoh:
+       { title: 'Penyebab Pemanasan Global', url: 'https://drive.google.com/...' },
+       ==================================================================== */
+    const iklimStudyNotes = [
+      { title: 'Efek Rumah Kaca dan Pemanasan Global', url: '' },
+      { title: 'Penyebab dan Bukti Perubahan Iklim', url: '' },
+      { title: 'Dampak Pemanasan Global bagi Manusia dan Lingkungan', url: '' },
+      { title: 'Mitigasi dan Adaptasi Perubahan Iklim', url: '' },
+      { title: 'Energi Surya dan Energi Angin', url: '' },
+      { title: 'Energi Air, Panas Bumi, dan Biomassa', url: '' },
+      { title: 'Membandingkan Kelebihan dan Keterbatasan Sumber Energi', url: '' }
+    ];
+
+    /* ====================================================================
+       EDIT LINK — PEMANASAN GLOBAL DAN ENERGI TERBARUKAN / SIMULASI INTERAKTIF
+       Isi URL simulasi (contoh PhET atau simulasi buatan sendiri).
+       ==================================================================== */
+    const iklimSimulations = [
+      { title: 'Bagaimana Efek Rumah Kaca Bekerja?', url: '' },
+      { title: 'Mengamati Perubahan Suhu dan Konsentrasi Gas Rumah Kaca', url: '' },
+      { title: 'Konversi Energi pada Panel Surya dan Turbin Angin', url: '' },
+      { title: 'Simulasi Pembangkit Listrik Tenaga Air', url: '' },
+      { title: 'Membandingkan Bauran Energi dan Dampaknya', url: '' }
+    ];
+
+    /* ====================================================================
+       EDIT LINK — PEMANASAN GLOBAL DAN ENERGI TERBARUKAN / LATIHAN SOAL
+       Bisa diisi link PDF, Google Form, Quizizz, dan lainnya.
+       ==================================================================== */
+    const iklimExercises = [
+      { title: 'Latihan 01 — Efek Rumah Kaca dan Pemanasan Global', url: '' },
+      { title: 'Latihan 02 — Bukti, Penyebab, dan Dampak Perubahan Iklim', url: '' },
+      { title: 'Latihan 03 — Mitigasi dan Adaptasi', url: '' },
+      { title: 'Latihan 04 — Prinsip Kerja Lima Sumber Energi Terbarukan', url: '' },
+      { title: 'Latihan 05 — Studi Kasus Pemilihan Energi', url: '' }
+    ];
+
+    /* ====================================================================
+       EDIT REFLEKSI — PEMANASAN GLOBAL DAN ENERGI TERBARUKAN
+       BUKAN TABEL LINK: level, judul, deskripsi, dan pertanyaan dapat diedit.
+       Tiap tingkat tampil sebagai dropdown tertutup secara default.
+       ==================================================================== */
+    const iklimReflection = [
+      {
+        level: 'Level 1 · Mengamati',
+        title: 'Perubahan di sekitar kita',
+        description: 'Hubungkan fenomena iklim dan penggunaan energi dengan rutinitasmu.',
+        questions: [
+          'Menurut kamu, apa bedanya hari yang terasa sangat panas dengan perubahan iklim? Bisakah satu hari panas membuktikan pemanasan global?',
+          'Lihat peralatan yang kamu gunakan sejak bangun tidur. Dari mana kira-kira energi listriknya berasal, dan apa yang berubah jika listrik padam?',
+          'Mengapa mobil yang diparkir di bawah terik Matahari terasa lebih panas di dalamnya? Bagian mana dari analogi ini yang mirip, dan yang tidak sama, dengan efek rumah kaca di atmosfer?',
+          'Di lingkungan rumah atau sekolah, kebiasaan apa yang menyebabkan penggunaan listrik meningkat tanpa kita sadari?'
+        ]
+      },
+      {
+        level: 'Level 2 · Menganalisis',
+        title: 'Menelusuri sebab dan akibat',
+        description: 'Bandingkan penjelasan ilmiah, konsumsi energi, serta konsekuensi pilihan teknologi.',
+        questions: [
+          'Mengapa menanam pohon saja tidak cukup untuk menghentikan pemanasan global jika emisi gas rumah kaca terus meningkat?',
+          'Dua rumah sama-sama menggunakan AC, tetapi tagihan listriknya berbeda jauh. Faktor apa saja yang perlu diperiksa sebelum menyimpulkan salah satunya boros?',
+          'Panel surya menghasilkan listrik saat ada cahaya Matahari, sedangkan kebutuhan listrik berlangsung juga pada malam hari. Bagaimana sebuah sistem listrik mengatasi perbedaan waktu tersebut?',
+          'Jika wilayah Indonesia punya panas bumi, air, biomassa, angin, dan sinar Matahari, mengapa kita tidak memakai satu jenis pembangkit yang sama di semua daerah?'
+        ]
+      },
+      {
+        level: 'Level 3 · Mengevaluasi',
+        title: 'Membuat keputusan yang bertanggung jawab',
+        description: 'Pertimbangkan bukti, trade-off, biaya, dan dampak sosial-lingkungan.',
+        questions: [
+          'Sekolah ingin menekan emisi dan tagihan listrik. Mana yang sebaiknya didahulukan: memasang panel surya, mengganti lampu, atau mengurangi penggunaan AC? Data apa yang kamu perlukan?',
+          'Sebuah daerah ingin membangun bendungan untuk PLTA, tetapi proyeknya dapat mengubah ekosistem dan tempat tinggal warga. Bagaimana kamu menilai apakah proyek itu layak?',
+          'Seseorang mengatakan bahwa kendaraan listrik pasti tidak menimbulkan polusi. Menurut kamu, batas sistem apa yang perlu dipakai untuk menguji pernyataan tersebut?',
+          'Kalau kamu menjadi pengambil kebijakan, bagaimana menyeimbangkan kebutuhan energi murah, keandalan pasokan, dan upaya mengurangi emisi? Pilihan apa yang mungkin tidak menyenangkan semua pihak?'
+        ]
+      }
+    ];
+
+    /* ====================================================================
+       EDIT TANTANGAN PRAKTIS — PEMANASAN GLOBAL DAN ENERGI TERBARUKAN
+       Tantangan ini muncul di bawah tiga accordion refleksi.
+       ==================================================================== */
+    const iklimChallenges = [
+      'Audit penggunaan energi: selama satu hari, catat lima perangkat listrik yang paling sering digunakan di rumah. Pilih satu kebiasaan yang bisa diubah dan jelaskan potensi dampaknya.',
+      'Bandingkan dua lokasi di sekitar rumah atau sekolah (misalnya area beraspal dan area rindang) pada waktu yang hampir sama. Buat dugaan tentang penyebab beda suhunya dan diskusikan cara mengujinya dengan adil.',
+      'Pilih satu wilayah di Indonesia. Usulkan sumber energi terbarukan yang masuk akal untuk wilayah itu dan jelaskan keunggulan, keterbatasan, serta informasi tambahan yang kamu perlukan.'
+    ];
+
+    /* ====================================================================
+       EDIT LINK — HUKUM KEKEKALAN ENERGI / STUDY NOTES
+       Materi di bawah sengaja berupa placeholder; tambahkan URL nanti.
+       ==================================================================== */
+    const energiStudyNotes = [
+      { title: 'Konsep Energi dan Perubahan Bentuk Energi', url: '' },
+      { title: 'Energi Kinetik dan Faktor yang Memengaruhinya', url: '' },
+      { title: 'Energi Potensial Gravitasi', url: '' },
+      { title: 'Energi Mekanik dan Hukum Kekekalan Energi', url: '' },
+      { title: 'Usaha dan Hubungannya dengan Perubahan Energi', url: '' },
+      { title: 'Gesekan, Kalor, dan Kekekalan Energi Total', url: '' }
+    ];
+
+    /* ====================================================================
+       EDIT LINK — HUKUM KEKEKALAN ENERGI / SIMULASI INTERAKTIF
+       Simulasi nanti dapat diarahkan ke GitHub Pages atau situs lain.
+       ==================================================================== */
+    const energiSimulations = [
+      { title: 'Eksplorasi Energi Kinetik: Massa dan Kecepatan', url: '' },
+      { title: 'Eksplorasi Energi Potensial: Massa dan Ketinggian', url: '' },
+      { title: 'Energi Mekanik pada Roller Coaster Tanpa Gesekan', url: '' },
+      { title: 'Roller Coaster dengan Gesekan dan Energi Termal', url: '' },
+      { title: 'Konversi Energi pada Sistem Pembangkit Listrik', url: '' }
+    ];
+
+    /* ====================================================================
+       EDIT LINK — HUKUM KEKEKALAN ENERGI / LATIHAN SOAL
+       Bisa diisi link Google Forms, PDF, atau latihan HTML.
+       ==================================================================== */
+    const energiExercises = [
+      { title: 'Latihan 01 — Mengidentifikasi Konversi Energi', url: '' },
+      { title: 'Latihan 02 — Menghitung Energi Kinetik', url: '' },
+      { title: 'Latihan 03 — Menghitung Energi Potensial Gravitasi', url: '' },
+      { title: 'Latihan 04 — Kekekalan Energi Mekanik', url: '' },
+      { title: 'Latihan 05 — Usaha, Gesekan, dan Perubahan Energi', url: '' }
+    ];
+
+    /* Hukum Kekekalan Energi belum memiliki Refleksi dan Tantangan.
+       Untuk sekarang hanya ada tiga bagian aktif: notes, simulations, exercises. */
+
+    const emailSubject = 'Pertanyaan Mengenai Serabi\'s Physics Classroom';
+
+    const app = document.getElementById('app');
+    const nav = document.getElementById('nav');
+    const content = document.getElementById('content');
+    let currentTopic = 0;
+    let activeSection = null; // null | 'notes' | 'simulations' | 'exercises' | 'reflection'
+
+    function escapeHTML(text) {
+      return String(text).replace(/[&<>"']/g, ch => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[ch]));
+    }
+
+    /* ============================================================
+       EDIT TAMPILAN HOME DI SINI
+       Semua tulisan Home ada di fungsi renderHome() ini.
+       Silakan ganti teks di antara tag HTML sesuai kebutuhan.
+       ============================================================ */
+    function renderHome() {
+      const cards = topics.slice(1).map((topic, i) => `
+        <button class="topic-card" type="button" data-topic="${i + 1}">
+          <div class="tile-icon">${topic.icon}</div>
+          <div class="tile-title">${escapeHTML(topic.name)}</div>
+          <div class="tile-footer"><span>Topik ${String(i + 1).padStart(2, '0')}</span><span>→</span></div>
+        </button>
+      `).join('');
+
+      return `
+        <!-- Judul utama Home -->
+        <div class="eyebrow">PORTAL PEMBELAJARAN</div>
+        <h1>Serabi's Physics Classroom</h1>
+        <p class="intro">Selamat datang di kelas fisika bersama Serabi. Topik apa yang ingin kamu pelajari hari ini?</p>
+
+        <!-- Kotak banner Home -->
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="hero-kicker">✦ EXPLORE · EXPERIMENT · UNDERSTAND</div>
+            <h2>Kata siapa belajar hanya di sekolah?</h2>
+            <p>Mau di rumah, di tempat les, sambil isi waktu di TJ atau KRL... selama ada koneksi Internet, kamu selalu punya akses ke bahan-bahan di sini.</p>
+          </div>
+          <div class="orbits"><span class="orbit-symbol">φ</span></div>
+        </div>
+
+        <!-- Kartu-kartu topik Home -->
+        <div class="section-heading">
+          <h2>Topik kelas 10</h2><span>5 topik tersedia</span>
+        </div>
+        <div class="topic-grid">${cards}</div>
+      `;
+    }
+
+    /* ============================================================
+       HALAMAN INDEX TOPIK
+       Besaran dan Satuan & Pemanasan Global: 4 tombol aktif.
+       Hukum Kekekalan Energi: 3 tombol aktif (tanpa refleksi dulu).
+       Vektor & Kinematika: tetap placeholder seperti sebelumnya.
+       ============================================================ */
+    function renderTopic() {
+      const topic = topics[currentTopic];
+      const units = [
+        ['01', 'Study notes', 'Ringkasan, pemahaman dasar, dan contoh-contoh kontekstual.'],
+        ['02', 'Simulasi interaktif', 'Tempat simulasi HTML yang nanti kita buat dan hubungkan.'],
+        ['03', 'Latihan soal', 'Kumpulan soal untuk menguji dan memperdalam pemahaman.'],
+        ['04', 'Refleksi dan tantangan', 'Eksplorasi lanjutan serta pertanyaan pemantik berpikir.']
+      ];
+      const activeTopic = [1, 2, 3].includes(currentTopic);
+      const availableUnits = currentTopic === 3 ? units.slice(0, 3) : units;
+      const sectionMap = { '01': 'notes', '02': 'simulations', '03': 'exercises', '04': 'reflection' };
+      return `
+        <div class="eyebrow">MODUL PEMBELAJARAN ${String(currentTopic).padStart(2, '0')}</div>
+        <h1>${escapeHTML(topic.name)}</h1>
+        <p class="intro">${escapeHTML(topic.description)}</p>
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="hero-kicker">SELAMAT DATANG DI TOPIK ${String(currentTopic).padStart(2, '0')}</div>
+            <h2>Apa yang ingin kamu lakukan?</h2>
+            <p>Pilih aktivitas sesuai kebutuhanmu.</p>
+          </div>
+          <div class="orbits"><span class="orbit-symbol">${topic.icon}</span></div>
+        </div>
+        <div class="section-heading"><h2>Daftar isi materi</h2><span>${availableUnits.length} bagian${activeTopic ? '' : ' · contoh'}</span></div>
+        <div class="topic-actions">
+          ${availableUnits.map(unit => activeTopic ? `
+            <button class="unit-box unit-action" type="button" data-open-section="${sectionMap[unit[0]]}" aria-label="Buka ${escapeHTML(unit[1])} ${escapeHTML(topic.name)}">
+              <div class="unit-id">${unit[0]} / MODULE</div>
+              <h3>${unit[1]}</h3>
+              <p>${unit[2]}</p>
+              <span class="unit-status">BUKA ${escapeHTML(unit[1].toUpperCase())} →</span>
+            </button>
+          ` : `
+            <div class="unit-box">
+              <div class="unit-id">${unit[0]} / MODULE</div>
+              <h3>${unit[1]}</h3>
+              <p>${unit[2]}</p>
+              <span class="unit-status">SEGERA HADIR</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="coming-banner">${currentTopic === 3 ? '✦ Bagian Refleksi dan Tantangan untuk Hukum Kekekalan Energi belum ditambahkan karena pembelajarannya masih berlangsung.' : '✦ Halaman ini adalah preview struktur index. Nantinya setiap bagian dapat berisi tautan, simulasi, LKPD, maupun materi pembelajaran yang sesungguhnya.'}</div>
+      `;
+    }
+
+    /* ============================================================
+       HALAMAN STUDY NOTES — BESARAN DAN SATUAN
+       Tabel dibuat otomatis dari array besaranStudyNotes di atas.
+       Baris dengan URL kosong tetap terlihat, tetapi tidak diklik.
+       ============================================================ */
+    function renderBesaranStudyNotes() {
+      const rows = besaranStudyNotes.map((note, index) => {
+        const validURL = /^https?:\/\//i.test(note.url);
+        const link = validURL
+          ? `<a class="notes-link" href="${escapeHTML(note.url)}" target="_blank" rel="noopener noreferrer" aria-label="Buka dokumen ${escapeHTML(note.title)} di tab baru">Buka dokumen ↗</a>`
+          : `<span class="notes-placeholder">Link menyusul</span>`;
+        return `
+          <tr>
+            <td><span class="notes-number">${String(index + 1).padStart(2, '0')}</span><span class="notes-title">${escapeHTML(note.title)}</span></td>
+            <td>${link}</td>
+          </tr>`;
+      }).join('');
+      return `
+        <button type="button" class="notes-back" data-back-to-topic="true">← Kembali ke Besaran dan Satuan</button>
+        <div class="eyebrow">BESARAN DAN SATUAN / STUDY NOTES</div>
+        <h1>Study Notes</h1>
+        <p class="intro">Kumpulan bahan bacaan untuk memperdalam pemahaman tentang besaran, satuan, dan pengukuran. Pilih dokumen yang ingin kamu pelajari.</p>
+        <div class="section-heading"><h2>Daftar artikel dan materi</h2><span>${besaranStudyNotes.length} materi</span></div>
+        <div class="notes-table-wrap">
+          <table class="notes-table">
+            <thead><tr><th scope="col">Topik artikel / study notes</th><th scope="col">Link dokumen</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <p class="notes-footnote">✦ Tautan dokumen yang sudah tersedia akan terbuka di tab baru. Tulisan <strong>Link menyusul</strong> berarti dokumennya belum ditambahkan.</p>
+      `;
+    }
+
+    /* ============================================================
+       HALAMAN SIMULASI INTERAKTIF & LATIHAN SOAL
+       Bentuk tabel sama seperti Study Notes; tinggal isi URL pada
+       besaranSimulations atau besaranExercises di atas.
+       ============================================================ */
+    function renderBesaranLinkTable(kind) {
+      const isSimulation = kind === 'simulations';
+      const items = isSimulation ? besaranSimulations : besaranExercises;
+      const pageTitle = isSimulation ? 'Simulasi Interaktif' : 'Latihan Soal';
+      const title = isSimulation ? 'Daftar simulasi' : 'Daftar paket latihan';
+      const itemHeader = isSimulation ? 'Judul simulasi' : 'Judul latihan soal';
+      const desc = isSimulation
+        ? 'Eksplorasi konsep besaran, satuan, dan pengukuran melalui simulasi. Tautan akan ditambahkan secara bertahap.'
+        : 'Latih pemahamanmu secara mandiri, mulai dari konsep dasar sampai penerapan besaran dan satuan dalam kehidupan sehari-hari.';
+      const rows = items.map((item, index) => {
+        const validURL = /^https?:\/\//i.test(item.url);
+        const link = validURL
+          ? `<a class="notes-link" href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">${isSimulation ? 'Buka simulasi' : 'Buka latihan'} ↗</a>`
+          : '<span class="notes-placeholder">Link menyusul</span>';
+        return `<tr>
+          <td><span class="notes-number">${String(index + 1).padStart(2, '0')}</span><span class="notes-title">${escapeHTML(item.title)}</span></td>
+          <td>${link}</td>
+        </tr>`;
+      }).join('');
+      return `
+        <button type="button" class="notes-back" data-back-to-topic="true">← Kembali ke Besaran dan Satuan</button>
+        <div class="eyebrow">BESARAN DAN SATUAN / ${escapeHTML(pageTitle.toUpperCase())}</div>
+        <h1>${pageTitle}</h1>
+        <p class="intro">${desc}</p>
+        <div class="section-heading"><h2>${title}</h2><span>${items.length} ${isSimulation ? 'simulasi' : 'latihan'}</span></div>
+        <div class="notes-table-wrap">
+          <table class="notes-table">
+            <thead><tr><th scope="col">${itemHeader}</th><th scope="col">Link</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <p class="notes-footnote">✦ Setelah tautan diisi, klik <strong>${isSimulation ? 'Buka simulasi' : 'Buka latihan'}</strong> untuk membuka materi di tab baru. Selama masih bertuliskan <strong>Link menyusul</strong>, tautannya belum aktif.</p>
+      `;
+    }
+
+    /* ============================================================
+       HALAMAN REFLEKSI DAN TANTANGAN — BESARAN DAN SATUAN
+       Pertanyaan ditata dari yang dekat dengan keseharian menuju
+       analisis dan evaluasi. Semuanya bisa diedit pada array di atas.
+       ============================================================ */
+    function renderBesaranReflection() {
+      let questionNo = 0;
+      const groups = besaranReflection.map((group, groupIndex) => `
+        <details class="reflection-group" aria-labelledby="reflection-heading-${groupIndex}">
+          <summary class="reflection-group-header">
+            <span class="reflection-level" aria-hidden="true">${groupIndex + 1}</span>
+            <div class="reflection-header-copy">
+              <div class="reflection-level-name">${escapeHTML(group.level)}</div>
+              <h2 id="reflection-heading-${groupIndex}">${escapeHTML(group.title)}</h2>
+              <p>${escapeHTML(group.description)}</p>
+              <span class="reflection-toggle-hint">Klik untuk melihat ${group.questions.length} pertanyaan</span>
+            </div>
+            <span class="reflection-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <ol class="reflection-list">
+            ${group.questions.map(q => `<li><span class="reflection-question-no">${String(++questionNo).padStart(2, '0')}</span><span class="reflection-question">${escapeHTML(q)}</span></li>`).join('')}
+          </ol>
+        </details>
+      `).join('');
+      return `
+        <button type="button" class="notes-back" data-back-to-topic="true">← Kembali ke Besaran dan Satuan</button>
+        <div class="eyebrow">BESARAN DAN SATUAN / REFLEKSI DAN TANTANGAN</div>
+        <h1>Refleksi dan Tantangan</h1>
+        <p class="intro">Pengukuran bukan sekadar membaca angka. Coba pikirkan pertanyaan berikut dari pengalamanmu sendiri. Tidak semuanya punya satu jawaban mutlak—yang terpenting adalah alasan dan bukti yang kamu gunakan.</p>
+        <div class="reflection-overview" aria-label="Tingkat kedalaman refleksi">
+          <span class="reflection-step">01 · Mengamati</span><span class="reflection-step-arrow">→</span>
+          <span class="reflection-step">02 · Menganalisis</span><span class="reflection-step-arrow">→</span>
+          <span class="reflection-step">03 · Mengevaluasi</span>
+        </div>
+        <!-- Klik satu tingkat refleksi untuk membuka / menutup daftar pertanyaannya. -->
+        ${groups}
+        <div class="challenge-box">
+          <div class="eyebrow">COBA SENDIRI</div>
+          <h2>Mini challenge: pengukuran di sekitarmu</h2>
+          <p>Jangan cuma dijawab di kepala. Pilih satu atau beberapa aktivitas berikut dan catat apa yang kamu temukan.</p>
+          <ol class="challenge-list">${besaranChallenges.map(item => `<li>${escapeHTML(item)}</li>`).join('')}</ol>
+        </div>
+        <p class="reflection-ending">✦ Tips refleksi: untuk setiap jawaban, tulis pendapatmu, contoh konkret, dan alasan mengapa kamu berpikir demikian. Boleh juga membandingkannya dengan pendapat temanmu.</p>
+      `;
+    }
+
+    /* ============================================================
+       HALAMAN MATERI (PEMANASAN GLOBAL & HUKUM KEKEKALAN ENERGI)
+       Isi tautan di array yang ditandai "EDIT LINK" di atas.
+       Fungsi yang sama menghasilkan tabel Study Notes / Simulasi / Latihan.
+       ============================================================ */
+    function renderNewTopicLinkTable() {
+      const climate = currentTopic === 2;
+      const arrays = climate
+        ? { notes: iklimStudyNotes, simulations: iklimSimulations, exercises: iklimExercises }
+        : { notes: energiStudyNotes, simulations: energiSimulations, exercises: energiExercises };
+      const labels = {
+        notes: { page: 'Study Notes', heading: 'Daftar artikel dan materi', col: 'Topik artikel / study notes', link: 'Buka dokumen', desc: 'Bahan bacaan dan penjelasan konsep yang dapat dipelajari secara mandiri.' },
+        simulations: { page: 'Simulasi Interaktif', heading: 'Daftar simulasi', col: 'Judul simulasi', link: 'Buka simulasi', desc: 'Eksplorasi konsep melalui simulasi virtual dan aktivitas interaktif.' },
+        exercises: { page: 'Latihan Soal', heading: 'Daftar paket latihan', col: 'Judul latihan soal', link: 'Buka latihan', desc: 'Periksa pemahamanmu melalui latihan bertahap dan contoh penerapan.' }
+      };
+      const item = labels[activeSection];
+      const list = arrays[activeSection];
+      const topicName = topics[currentTopic].name;
+      const rows = list.map((entry, index) => {
+        const hasLink = /^https?:\/\//i.test(entry.url.trim());
+        const link = hasLink
+          ? `<a class="notes-link" href="${escapeHTML(entry.url.trim())}" target="_blank" rel="noopener noreferrer" aria-label="${item.link} ${escapeHTML(entry.title)} di tab baru">${item.link} ↗</a>`
+          : '<span class="notes-placeholder">Link menyusul</span>';
+        return `<tr><td><span class="notes-number">${String(index + 1).padStart(2, '0')}</span><span class="notes-title">${escapeHTML(entry.title)}</span></td><td>${link}</td></tr>`;
+      }).join('');
+      return `
+        <button type="button" class="notes-back" data-back-to-topic="true">← Kembali ke ${escapeHTML(topicName)}</button>
+        <div class="eyebrow">${escapeHTML(topicName.toUpperCase())} / ${escapeHTML(item.page.toUpperCase())}</div>
+        <h1>${item.page}</h1>
+        <p class="intro">${item.desc}</p>
+        <div class="section-heading"><h2>${item.heading}</h2><span>${list.length} materi</span></div>
+        <div class="notes-table-wrap">
+          <table class="notes-table">
+            <thead><tr><th scope="col">${item.col}</th><th scope="col">Link</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <p class="notes-footnote">✦ Tautan yang telah diisi akan terbuka di tab baru. <strong>Link menyusul</strong> berarti materi tersebut masih menunggu tautan.</p>
+      `;
+    }
+
+    /* ============================================================
+       HALAMAN REFLEKSI DAN TANTANGAN — PEMANASAN GLOBAL
+       Isi / edit pertanyaan di "EDIT REFLEKSI" dan tantangan di
+       "EDIT TANTANGAN PRAKTIS" pada bagian data JavaScript di atas.
+       Accordion <details> tertutup secara default, bisa dibuka/tutup.
+       ============================================================ */
+    function renderIklimReflection() {
+      let questionNo = 0;
+      const groups = iklimReflection.map((group, index) => `
+        <details class="reflection-group">
+          <summary class="reflection-group-header">
+            <span class="reflection-level" aria-hidden="true">${index + 1}</span>
+            <div class="reflection-header-copy">
+              <div class="reflection-level-name">${escapeHTML(group.level)}</div>
+              <h2>${escapeHTML(group.title)}</h2>
+              <p>${escapeHTML(group.description)}</p>
+              <span class="reflection-toggle-hint">Klik untuk melihat ${group.questions.length} pertanyaan</span>
+            </div>
+            <span class="reflection-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <ol class="reflection-list">
+            ${group.questions.map(q => `<li><span class="reflection-question-no">${String(++questionNo).padStart(2, '0')}</span><span class="reflection-question">${escapeHTML(q)}</span></li>`).join('')}
+          </ol>
+        </details>
+      `).join('');
+      return `
+        <button type="button" class="notes-back" data-back-to-topic="true">← Kembali ke Pemanasan Global dan Energi Terbarukan</button>
+        <div class="eyebrow">PEMANASAN GLOBAL DAN ENERGI TERBARUKAN / REFLEKSI DAN TANTANGAN</div>
+        <h1>Refleksi dan Tantangan</h1>
+        <p class="intro">Dari pengalaman sehari-hari hingga keputusan energi yang kompleks: apa yang kamu pikirkan, bukti apa yang kamu punya, dan siapa saja yang terdampak? Klik tiap level untuk membuka pertanyaan.</p>
+        <div class="reflection-overview" aria-label="Tingkat kedalaman refleksi">
+          <span class="reflection-step">01 · Mengamati</span><span class="reflection-step-arrow">→</span>
+          <span class="reflection-step">02 · Menganalisis</span><span class="reflection-step-arrow">→</span>
+          <span class="reflection-step">03 · Mengevaluasi</span>
+        </div>
+        ${groups}
+        <div class="challenge-box">
+          <div class="eyebrow">COBA SENDIRI</div>
+          <h2>Mini challenge: iklim dan energi di sekitarmu</h2>
+          <p>Pilih satu aktivitas untuk membuat jawabanmu lebih kuat dengan data, pengamatan, atau argumen.</p>
+          <ol class="challenge-list">${iklimChallenges.map(q => `<li>${escapeHTML(q)}</li>`).join('')}</ol>
+        </div>
+        <p class="reflection-ending">✦ Saat merefleksikan isu iklim dan energi, bedakan hasil pengamatan, dugaan, dan kesimpulan berdasarkan data.</p>
+      `;
+    }
+
+    /* ============================================================
+       HALAMAN REFERENSI EKSTERNAL
+       Kartu dibuat otomatis dari array externalResources di atas.
+       Link dibuka pada tab baru agar halaman kelas tetap terbuka.
+       ============================================================ */
+    function renderExternalResources() {
+      const cards = externalResources.map(resource => {
+        // Batasi URL ke http(s) supaya URL yang keliru tidak menjadi tautan berbahaya.
+        const validURL = /^https:\/\//i.test(resource.url);
+        const link = validURL
+          ? `<a class="resource-link" href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer" aria-label="Buka ${escapeHTML(resource.name)} di tab baru">Kunjungi situs ↗</a>`
+          : `<span class="resource-description">Alamat situs belum diisi.</span>`;
+        return `
+          <article class="resource-card">
+            <div class="resource-top">
+              <span class="resource-icon" aria-hidden="true">${escapeHTML(resource.icon)}</span>
+              <span class="resource-category">${escapeHTML(resource.category)}</span>
+            </div>
+            <h2>${escapeHTML(resource.name)}</h2>
+            <p class="resource-description">${escapeHTML(resource.description)}</p>
+            ${link}
+          </article>`;
+      }).join('');
+      return `
+        <div class="eyebrow">BELAJAR LEBIH JAUH</div>
+        <h1>Referensi Eksternal</h1>
+        <p class="intro">Penasaran dengan penjelasan lain atau ingin mencoba lebih banyak simulasi? Berikut beberapa sumber belajar untuk mendampingi pembelajaran fisika kelas X.</p>
+        <div class="section-heading"><h2>Pilihan sumber belajar</h2><span>${externalResources.length} referensi</span></div>
+        <div class="resource-grid">${cards}</div>
+        <div class="resource-note">✦ Semua referensi di halaman ini dikelola oleh pihak eksternal. Klik <strong>Kunjungi situs</strong> untuk membuka sumber di tab baru. Sebagian besar materi menggunakan bahasa Inggris dan mungkin membutuhkan koneksi internet.</div>
+      `;
+    }
+
+    /* ============================================================
+       HALAMAN PUSAT BANTUAN — profil dan kontak developer
+       ============================================================ */
+    function renderHelp() {
+      // Format WhatsApp: kode negara 62 tanpa tanda +, spasi, atau strip.
+      let phoneDigits = developer.phone.replace(/\D/g, '');
+      if (phoneDigits.startsWith('0')) phoneDigits = '62' + phoneDigits.slice(1);
+      if (phoneDigits.startsWith('8')) phoneDigits = '62' + phoneDigits;
+      const whatsappReady = /^62\d{8,13}$/.test(phoneDigits);
+      const emailReady = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(developer.email);
+
+      const phoneField = whatsappReady
+        ? `<a href="https://wa.me/${phoneDigits}" target="_blank" rel="noopener noreferrer" title="Buka chat WhatsApp">${escapeHTML(developer.phone)} ↗</a>`
+        : `<span class="inactive-contact" title="Isi nomor HP sebenarnya pada pengaturan developer">${escapeHTML(developer.phone)} (placeholder)</span>`;
+      const emailField = emailReady
+        ? `<a href="mailto:${encodeURIComponent(developer.email).replace(/%40/g, '@')}?subject=${encodeURIComponent(emailSubject)}" title="Tulis email kepada developer">${escapeHTML(developer.email)} ↗</a>`
+        : `<span class="inactive-contact">${escapeHTML(developer.email)} (placeholder)</span>`;
+
+      return `
+        <div class="eyebrow">INFORMASI &amp; KONTAK</div>
+        <h1>Pusat Bantuan</h1>
+        <p class="intro">Ada pertanyaan, saran, atau menemukan kendala saat menggunakan Serabi's Physics Classroom? Hubungi developer melalui kontak berikut.</p>
+        <div class="help-layout">
+          <section class="developer-card" aria-label="Informasi developer">
+            <div class="developer-heading">
+              <div class="developer-avatar" aria-hidden="true">✦</div>
+              <div>
+                <div class="developer-kicker">MEET THE DEVELOPER</div>
+                <h2>${escapeHTML(developer.name)}</h2>
+                <p>Serabi's Physics Classroom</p>
+              </div>
+            </div>
+            <div class="developer-info">
+              <div class="developer-field"><span class="developer-field-label">Nama developer</span><span class="developer-field-value">${escapeHTML(developer.name)}</span></div>
+              <div class="developer-field"><span class="developer-field-label">Sekolah asal developer</span><span class="developer-field-value">${escapeHTML(developer.school)}</span></div>
+              <div class="developer-field"><span class="developer-field-label">Jabatan developer</span><span class="developer-field-value">${escapeHTML(developer.role)}</span></div>
+              <div class="developer-field"><span class="developer-field-label">Nomor HP / WhatsApp</span><span class="developer-field-value">${phoneField}</span></div>
+              <div class="developer-field"><span class="developer-field-label">Email developer</span><span class="developer-field-value">${emailField}</span></div>
+            </div>
+          </section>
+          <div class="help-note">✦ Nomor WhatsApp akan membuka chat, sedangkan alamat email akan membuka aplikasi email dengan subjek pesan yang sudah disiapkan. Ganti placeholder nomor HP terlebih dahulu untuk mengaktifkan tautan WhatsApp.</div>
+        </div>
+      `;
+    }
+
+    function render() {
+      nav.innerHTML = topics.map((topic, i) => `
+        <button type="button" class="nav-item ${i === currentTopic ? 'active' : ''}"
+          data-topic="${i}" ${i === currentTopic ? 'aria-current="page"' : ''}>
+          <span class="nav-icon">${topic.icon}</span>
+          <span class="nav-text">${escapeHTML(topic.name)}</span>
+        </button>
+      `).join('');
+      const helpSelected = currentTopic === -1;
+      const externalSelected = currentTopic === -2;
+      const helpButton = document.getElementById('helpButton');
+      const externalButton = document.getElementById('externalButton');
+      helpButton.classList.toggle('active', helpSelected);
+      externalButton.classList.toggle('active', externalSelected);
+      if (helpSelected) helpButton.setAttribute('aria-current', 'page');
+      else helpButton.removeAttribute('aria-current');
+      if (externalSelected) externalButton.setAttribute('aria-current', 'page');
+      else externalButton.removeAttribute('aria-current');
+      const sectionNames = { notes: 'Study Notes', simulations: 'Simulasi Interaktif', exercises: 'Latihan Soal', reflection: 'Refleksi dan Tantangan' };
+      const showingSection = activeSection && [1, 2, 3].includes(currentTopic);
+      document.getElementById('crumb').textContent = externalSelected
+        ? 'Referensi Eksternal'
+        : (helpSelected ? 'Pusat Bantuan'
+          : (showingSection ? topics[currentTopic].name + ' / ' + sectionNames[activeSection] : topics[currentTopic].name));
+      if (externalSelected) content.innerHTML = renderExternalResources();
+      else if (helpSelected) content.innerHTML = renderHelp();
+      else if (currentTopic === 1 && activeSection === 'notes') content.innerHTML = renderBesaranStudyNotes();
+      else if (currentTopic === 1 && ['simulations', 'exercises'].includes(activeSection)) content.innerHTML = renderBesaranLinkTable(activeSection);
+      else if (currentTopic === 1 && activeSection === 'reflection') content.innerHTML = renderBesaranReflection();
+      else if ([2, 3].includes(currentTopic) && ['notes', 'simulations', 'exercises'].includes(activeSection)) content.innerHTML = renderNewTopicLinkTable();
+      else if (currentTopic === 2 && activeSection === 'reflection') content.innerHTML = renderIklimReflection();
+      else content.innerHTML = currentTopic === 0 ? renderHome() : renderTopic();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    document.addEventListener('click', event => {
+      // Membuka subhalaman materi sesuai topik, tanpa pindah file HTML.
+      const moduleButton = event.target.closest('[data-open-section]');
+      if (moduleButton) {
+        activeSection = moduleButton.dataset.openSection;
+        render();
+        return;
+      }
+      if (event.target.closest('[data-back-to-topic]')) {
+        activeSection = null;
+        render();
+        return;
+      }
+      const externalButton = event.target.closest('[data-external]');
+      if (externalButton) {
+        currentTopic = -2;
+        activeSection = null;
+        app.classList.remove('menu-open');
+        render();
+        return;
+      }
+      const helpButton = event.target.closest('[data-help]');
+      if (helpButton) {
+        currentTopic = -1;
+        activeSection = null;
+        app.classList.remove('menu-open');
+        render();
+        return;
+      }
+      const topicButton = event.target.closest('[data-topic]');
+      if (topicButton) {
+        currentTopic = Number(topicButton.dataset.topic);
+        activeSection = null;
+        app.classList.remove('menu-open');
+        render();
+      }
+    });
+    document.getElementById('menuButton').addEventListener('click', () => app.classList.toggle('menu-open'));
+    document.getElementById('screenOverlay').addEventListener('click', () => app.classList.remove('menu-open'));
+    render();
+  </script>
+</body>
+</html>
